@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'sessions#new'
-  get 'welcome', to: 'pages#welcome'
+  get 'map', to: 'map#show'
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
