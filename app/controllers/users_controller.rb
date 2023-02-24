@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to welcome_path
+      redirect_to map_path
     else
       render 'sessions/new'
     end
