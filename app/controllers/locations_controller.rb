@@ -34,6 +34,11 @@ class LocationsController < ApplicationController
     end
   end
 
+  def toggle_location_visibility
+    @location = current_user.locations.find_by(current_location: true)
+    @location.update(visible: !@location.visible)
+  end
+
   private
 
   def location_params

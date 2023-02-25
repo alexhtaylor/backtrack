@@ -4,37 +4,132 @@
 <%= button_to 'Pin current location', locations_path(location: { latitude: @latitude, longitude: @longitude, current_location: true, visible: true}), method: :post %>
 <%# <%= button_to 'Pin current location', locations_path(location: { latitude: @latitude, longitude: @longitude, current_location: true, visible: true}), method: :post %>
 
+<% if current_user.locations.exists?(current_location: true) %>
+  <% current_location = current_user.locations.find_by(current_location: true) %>
+  <% if current_location.visible %>
+    <%= button_to 'Hide Location', toggle_location_visibility_path(current_location), method: :patch, class: 'toggle-location-button', data: { toggle_text: 'Show Location' } %>
+  <% else %>
+    <%= button_to 'Show Location', toggle_location_visibility_path(current_location), method: :patch, class: 'toggle-location-button', data: { toggle_text: 'Hide Location' } %>
+  <% end %>
+<% end %>
 
 <!-- Include Leaflet JS directly -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
 
 <script>
+
   var map = L.map('map').setView([<%= @latitude %>, <%= @longitude %>], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  function addMarker() {
+  // var toggleButton = document.querySelector('.toggle-location-button');
 
-    console.log('add marker being executed')
   <% current_user.locations.each do |location| %>
-  <% if location.current_location === true %>
-    var redIcon = L.icon({
-      iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
+    <% if location.current_location === true %>
+      var redIcon = L.icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
 
-    L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: redIcon}).addTo(map)
-      .bindPopup("<%= current_user.first_name %>'s current location").openPopup();
+      var transparentIcon = L.icon({
+  iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-yellow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+      var marker = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: redIcon}).addTo(map)
+        .bindPopup("<%= current_user.first_name %>'s current location").openPopup();
+
+      // Get the Hide/Show location button element
+      var toggleButton = document.querySelector('.toggle-location-button');
+    console.log('toggle button:', toggleButton)
+      <% if location.visible === true %>
+      var visibility = true
+      <% else %>
+      var visibility = false
+      <%end%>
+      toggleButton.addEventListener('click', function() {
+        visibility = !visibility;
+        console.log('changing icon')
+        console.log('location visibility', location.visible)
+        marker.setIcon(visibility ? redIcon : transparentIcon);
+        });
+      marker.setIcon(visibility ? redIcon : transparentIcon);
+      // Set the initial icon based on the location visibility
+      marker.setIcon(location.visible ? redIcon : L.icon({ opacity: 0 }));
+      // Add a click event listener to toggle the icon on the marker
+      <% end %>
   <% end %>
+
+  function addMarker() {
+    console.log("running addmarkerr")
+  <% current_user.locations.each do |location| %>
+    <% if location.current_location === true %>
+    <% puts "location issss: #{location.current_location}"%>
+      var redIcon = L.icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+
+      var transparentIcon = L.icon({
+  iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-yellow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+      var marker = L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: redIcon}).addTo(map)
+        .bindPopup("<%= current_user.first_name %>'s current location").openPopup();
+
+      // Get the Hide/Show location button element
+      var toggleButton = document.querySelector('.toggle-location-button');
+    // console.log('toggle button:', toggleButton)
+      // Set the initial icon based on the location visibility
+      marker.setIcon(location.visible ? redIcon : L.icon({ opacity: 0 }));
+      // Add a click event listener to toggle the icon on the marker
+      toggleButton.addEventListener('click', function() {
+        // location.visible = !location.visible;
+        console.log('changing icon')
+        marker.setIcon(location.visible ? redIcon : transparentIcon);
+        });
+    <% end %>
   <% end %>
-  }
+}
+
+
+  // function addMarker() {
+
+  //   console.log('add marker being executed')
+  // <% current_user.locations.each do |location| %>
+  // <% if location.current_location === true %>
+  //   var redIcon = L.icon({
+  //     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  //     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  //     iconSize: [25, 41],
+  //     iconAnchor: [12, 41],
+  //     popupAnchor: [1, -34],
+  //     shadowSize: [41, 41]
+  //   });
+
+  //   L.marker([<%= location.latitude %>, <%= location.longitude %>], {icon: redIcon}).addTo(map)
+  //     .bindPopup("<%= current_user.first_name %>'s current location").openPopup();
+  // <% end %>
+  // <% end %>
+  // }
 
   addMarker()
 </script>
