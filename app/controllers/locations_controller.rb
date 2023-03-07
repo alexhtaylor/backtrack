@@ -3,16 +3,18 @@ class LocationsController < ApplicationController
     update
     @location = current_user.locations.new(location_params)
     # Testing
-    # @location.latitude = 30
-    # @location.longitude = -60
+    # @location.latitude = 20
+    # @location.longitude = 99
     #
     @location.datetime = DateTime.current
 
     if @location.save
       flash[:success] = "Location pinned!"
+      puts "Location pinned!"
       redirect_to map_path
     else
       flash[:error] = "Failed to pin location."
+      puts "Failed to pin location."
       redirect_to map_path
     end
     # respond_to do |format|
