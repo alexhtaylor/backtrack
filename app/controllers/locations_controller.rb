@@ -1,7 +1,27 @@
 class LocationsController < ApplicationController
+
+  def show
+    @latitudee = params[:latitude]
+    @longitudee = params[:longitude]
+    session[:latitudee] = @latitudee
+    session[:longitudee] = @longitudee
+    puts "LATITUDE FROM LOCATIONS = #{@latitudee}"
+  end
+
   def create
+    puts "INSIDE THE CREATE FUNCTION"
     update
+
+    @latitudee = session[:latitudee]
+@longitudee = session[:longitudee]
+    puts "LATITUDE FROM LOCATIONS CREATE = #{@latitudee}"
     @location = current_user.locations.new(location_params)
+    # @latitude = params[:latitude]
+    # @longitude = params[:longitude]
+    # @latitudee = params[:latitude]
+    @location.latitude = @latitudee
+    @location.longitude = @longitudee
+    # puts "latitude from location controller= #{@latitude}"
     # Testing
     # @location.latitude = 20
     # @location.longitude = 99
