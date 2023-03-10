@@ -1,20 +1,9 @@
 
 
 <h1><%= current_user.first_name %>'s Map Page</h1>
-<p>Latitude: <%= @latitude %></p>
-<p>Longitude: <%= @longitude %></p>
 
 <div id="map" style="width: 100%; height: 500px;"></div>
-<%= button_to 'Pin current location', locations_path(location: { latitude: @latitude, longitude: @longitude, current_location: true, visible: true}), method: :post, id: 'pin-location-button' %>
-<%# <%= button_to 'Pin current location', locations_path(location: { current_location: true, visible: true }), method: :post, id: 'pin-location-button', onclick: 'getCurrentLocation(event, this)', type: 'button'%>
-<% if current_user.locations.exists?(current_location: true) %>
-  <% current_location = current_user.locations.find_by(current_location: true) %>
-  <% if current_location.visible %>
-    <%= button_to 'Hide Location', toggle_location_visibility_path(current_location), method: :patch, class: 'toggle-location-button', data: { toggle_text: 'Show Location' } %>
-  <% else %>
-    <%= button_to 'Show Location', toggle_location_visibility_path(current_location), method: :patch, class: 'toggle-location-button', data: { toggle_text: 'Hide Location' } %>
-  <% end %>
-<% end %>
+<%= button_to 'Pin current location', locations_path(location: { current_location: true, visible: true}), method: :post, id: 'pin-location-button' %>
 
 <!-- Include Leaflet JS directly -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -44,44 +33,6 @@ function addMarkersToMap() {
   <% end %>
 }
 
-
-// Code attempting to set the location correctly in the database, doesnt work for some reason
-function getCurrentLocation(event, button) {
-  console.log('running getCurrentLocation')
-  event.preventDefault();
-  var newLatitude
-  var newLongitude
-  navigator.geolocation.getCurrentPosition(function(position, button) {
-    var newLatitude = position.coords.latitude;
-    var newLongitude = position.coords.longitude;
-  })
-  console.log('buttoooonn', button)
-    console.log('fooormmm', button.form)
-  var form = button.form;
-  form.action = form.action.replace(/latitude=\d+\.\d+/, 'latitude=' + newLatitude);
-  form.action = form.action.replace(/longitude=\d+\.\d+/, 'longitude=' + newLongitude);
-  form.submit();
-}
-
-// // retrieve the user's location
-// navigator.geolocation.getCurrentPosition(function(position) {
-//   var latitude = position.coords.latitude;
-//   var longitude = position.coords.longitude;
-
-//   // send the location data to the server-side
-//   $.ajax({
-//     url: '/map',
-//     type: 'GET',
-//     dataType: 'json',
-//     data: { latitude: latitude, longitude: longitude },
-//     success: function(data) {
-//       // handle the server-side response
-//     }
-//   });
-// });
-
-
-
 navigator.geolocation.getCurrentPosition(function(position) {
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
@@ -97,25 +48,6 @@ navigator.geolocation.getCurrentPosition(function(position) {
     }
   });
 });
-
-// navigator.geolocation.getCurrentPosition(function(position) {
-//   var latitude = position.coords.latitude;
-//   var longitude = position.coords.longitude;
-
-//   // send the location data to the server-side
-//   $.ajax({
-//     url: '/locations',
-//     type: 'POST',
-//     dataType: 'json',
-//     data: { location: { latitude: latitude, longitude: longitude } },
-//     success: function(data) {
-//       // handle the server-side response
-//     }
-//   });
-// });
-
-
-
 
 // Setting the loading position of the map
 if (navigator.geolocation) {
