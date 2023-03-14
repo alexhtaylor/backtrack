@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_23_065100) do
+ActiveRecord::Schema.define(version: 2023_03_14_162258) do
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "locations", force: :cascade do |t|
     t.datetime "datetime"
@@ -31,6 +38,9 @@ ActiveRecord::Schema.define(version: 2023_02_23_065100) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "username"
+    t.json "pending_request_ids"
+    t.index ["username"], name: "index_users_on_username"
   end
 
   add_foreign_key "locations", "users"

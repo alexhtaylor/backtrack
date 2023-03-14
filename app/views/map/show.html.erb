@@ -5,6 +5,24 @@
 <div id="map" style="width: 100%; height: 500px;"></div>
 <%= button_to 'Pin current location', locations_path(location: { current_location: true, visible: true}), method: :post, id: 'pin-location-button' %>
 
+<%= form_with url: request_friend_path, method: :post, local: true do |form| %>
+  <%= form.label :username %>
+  <%= form.text_field :username %>
+  <%= form.submit 'Add friend' %>
+<% end %>
+
+<div id="friend-requests">
+  <% if current_user.pending_request_ids && current_user.pending_request_ids.length > 0 %>
+    <% current_user.pending_request_ids.each do |id| %>
+      <% user = User.find_by(id: id) %>
+      <div style="display: flex;"><div style="padding-right: 10px;">You have a pending friend request from <%= user.username %></div>
+        <%= button_to 'Accept', accept_friend_path(user_id: user.id), method: :post %>
+        <%= button_to 'Reject', reject_friend_path(user_id: user.id), method: :post %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
 <!-- Include Leaflet JS directly -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
@@ -15,11 +33,14 @@ var map;
 
 // Adding all markers to the map
 function addMarkersToMap() {
-  <% location_array = Location.all %>
-  <% Location.all.each do |l| %>
-    <% if l.current_location === true %>
+  // Getting an array of all the current user's friends
+  <% friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id) %>
+  <% friend_locations = Location.where(user_id: [current_user.id] + friend_ids_array, current_location: true) %>
+    <% friend_locations.each do |l| %>
+
+      var iconUrlColour = <%= l.user_id == current_user.id %> ? "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" : "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png";
       var redIcon = L.icon({
-        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        iconUrl: iconUrlColour,
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
         iconSize: [25, 41],
         iconAnchor: [12, 41],
@@ -28,8 +49,7 @@ function addMarkersToMap() {
       });
 
       var marker = L.marker([<%= l.latitude %>, <%= l.longitude %>], {icon: redIcon}).addTo(map)
-        .bindPopup("<%= User.find_by(id: l.user_id).first_name %>'s current location").openPopup();
-    <% end %>
+        .bindPopup("<%= l.user_id == current_user.id ? "You" : User.find_by(id: l.user_id).username %>").openPopup();
   <% end %>
 }
 

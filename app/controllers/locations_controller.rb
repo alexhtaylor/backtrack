@@ -1,8 +1,8 @@
 class LocationsController < ApplicationController
 
   def show
-    params[:latitude] = session[:latitude]
-    params[:longitude] = session[:longitude]
+    session[:latitude] = params[:latitude]
+    session[:longitude] = params[:longitude]
   end
 
   def create
@@ -11,8 +11,8 @@ class LocationsController < ApplicationController
     @location.latitude = session[:latitude]
     @location.longitude = session[:longitude]
     # Testing
-    # @location.latitude = 20
-    # @location.longitude = 99
+    # @location.latitude = 23
+    # @location.longitude = 74
     #
     @location.datetime = DateTime.current
 
