@@ -1,3 +1,149 @@
 // Place all the styles related to the Map controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(202, 230, 189);
+}
+
+.logo-container {
+  text-align: center;
+  z-index: 99999;
+  position: absolute;
+  top: 25px;
+}
+
+.logo-container img {
+  max-width: 100%;
+  height: 40px;
+}
+
+.leaflet-popup-content {
+  font-size: 24px;
+}
+
+.leaflet-tooltip {
+  font-size: 24px;
+}
+
+#pin-location-button {
+  position: absolute;
+  bottom: 10px;
+  z-index: 9999;
+  transition: transform 0.2s ease;
+}
+
+#pin-location-button img {
+  height: 50px;
+}
+
+.main-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 75vh;
+}
+
+
+#map {
+  width: 90%;
+  height: 100%;
+  margin-top: 50px;
+  border: 7px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 40px 20px rgba(0, 0, 0, 0.22);
+}
+
+#pin-location-button:active {
+  transform: translateY(5px);
+}
+
+.friends-dropdown {
+  position: absolute;
+  left: 7%;
+  top: 20vh;
+  z-index: 9999;
+}
+
+.friends-dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 10px;
+  border: 2px solid black;
+  color: black;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.45);
+  transition: opacity 0.3s ease-out;
+  opacity: 0;
+
+}
+.active {
+  opacity: 1;
+}
+
+.add-friend {
+  display: flex;
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+  max-height: 200px;
+  overflow: scroll;
+  li {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.requests-text {
+  display: flex;
+  margin: 3px 0px;
+}
+
+
+.friends-dropdown-content input {
+  background-color: rgba(255, 255, 255, 0.45);
+  color: black;
+  // box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  border: 2px solid black;
+  cursor: pointer;
+  margin: 3px;
+}
+
+#friends-dropdown-button {
+  font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    color: black;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    border: 2px solid black;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.accept-reject {
+  display: flex;
+}
+
+
+@media screen and (min-width: 768px) {
+  .main-container {
+    height: 90vh;
+  }
+}
