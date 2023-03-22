@@ -30,10 +30,12 @@
           <% end %>
           </ul>
         <% end %>
-        <% if current_user.friends.length > 0 %>
+        <% friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id) %>
+        <% if friend_ids_array.length > 0 %>
         <span class="requests-text">Friends</span>
         <ul>
-          <% current_user.friends.each do |friend| %>
+          <% friend_ids_array.each do |id| %>
+          <% friend = User.find_by(id: id) %>
             <li><div><%= friend.username %> (<%= friend.first_name %>)</div>
             </li>
           <% end %>
