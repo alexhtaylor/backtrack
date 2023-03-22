@@ -20,6 +20,18 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
+  sslmode: require
+  host: ec2-3-208-74-199.compute-1.amazonaws.com
+  database: d824r633kb9f6d
+  username: onbrwtivyknase
+  password: 3b018d9e6d1853ae3f8ec445bcbe9aef99f1837731d1d79ade3073e4ea06971c
