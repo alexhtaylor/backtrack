@@ -1,7 +1,11 @@
 // Place all the styles related to the Map controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-
+@mixin touch-screen {
+  @media (pointer: coarse) {
+      background-color: blue;
+  }
+}
 
 body {
   display: flex;
@@ -10,6 +14,10 @@ body {
   position: relative;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: rgb(202, 230, 189);
+
+    @media (pointer: coarse) {
+        // background-color: blue;
+    }
 }
 
 .logo-container {
@@ -22,6 +30,10 @@ body {
 .logo-container img {
   max-width: 100%;
   height: 40px;
+
+  @media (pointer: coarse) {
+    height: 70px;
+  }
 }
 
 .leaflet-popup-content {
@@ -37,10 +49,13 @@ body {
   bottom: 10px;
   z-index: 9999;
   transition: transform 0.2s ease;
-}
 
-#pin-location-button img {
-  height: 50px;
+  img {
+    height: 50px;
+    @media (pointer: coarse) {
+     height: 100px;
+    }
+  }
 }
 
 .main-container {
@@ -51,6 +66,10 @@ body {
   flex-direction: column;
   align-items: center;
   height: 75vh;
+
+  @media (pointer: coarse) {
+    height: 50vh;
+  }
 }
 
 
@@ -72,6 +91,10 @@ body {
   left: 7%;
   top: 20vh;
   z-index: 9999;
+
+  @media (pointer: coarse) {
+    top: 10vh;
+  }
 }
 
 .friends-dropdown-content {
@@ -124,6 +147,10 @@ ul {
   border: 2px solid black;
   cursor: pointer;
   margin: 3px;
+
+  @media (pointer: coarse) {
+    font-size: 30px;
+  }
 }
 
 #friends-dropdown-button {
@@ -135,6 +162,11 @@ ul {
     border: 2px solid black;
     cursor: pointer;
     margin-bottom: 10px;
+
+    @media (pointer: coarse) {
+      font-size: 35px;
+    }
+
 }
 
 .accept-reject {
@@ -145,5 +177,9 @@ ul {
 @media screen and (min-width: 768px) {
   .main-container {
     height: 90vh;
+
+      @media (pointer: coarse) {
+        height: 65vh;
+    }
   }
 }

@@ -94,10 +94,13 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(position) {
     var newLongitude = position.coords.longitude;
     var newLatitude = position.coords.latitude;
-    map = L.map('map').setView([newLatitude, newLongitude], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; OpenStreetMap contributors'
-    }).addTo(map);
+    map = L.map('map').setView([newLatitude, newLongitude], 100);
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   attribution: 'Map data &copy; OpenStreetMap contributors'
+    // }).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Map data &copy; Esri'
+}).addTo(map);
 
     addMarkersToMap();
     map.setView([newLatitude, newLongitude], 13);
