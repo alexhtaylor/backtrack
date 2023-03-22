@@ -30,6 +30,15 @@
           <% end %>
           </ul>
         <% end %>
+        <% if current_user.friends.length > 0 %>
+        <span class="requests-text">Friends</span>
+        <ul>
+          <% current_user.friends.each do |friend| %>
+            <li><div><%= friend.username %> (<%= friend.first_name %>)</div>
+            </li>
+          <% end %>
+          </ul>
+        <% end %>
       </div>
     </div>
   </div>
