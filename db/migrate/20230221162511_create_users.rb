@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :last_name
       t.string :email
       t.string :password_digest
-      t.jsonb :pending_request_ids, default: []
+      t.json :pending_request_ids, default: []
 
       t.timestamps
     end
