@@ -60,3 +60,5 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'geocoder'
 
 gem 'jquery-rails'
+
+gem 'pg'
