@@ -7,9 +7,13 @@ class LocationsController < ApplicationController
 
   def create
     update
+    puts "Running Create Action"
     @location = current_user.locations.new(location_params)
+    puts "new locationnn #{@location}"
     @location.latitude = session[:latitude]
     @location.longitude = session[:longitude]
+    @location.current_location = true
+    @location.visible = true
     # Testing
     # @location.latitude = 23
     # @location.longitude = 74
@@ -19,12 +23,11 @@ class LocationsController < ApplicationController
     if @location.save
       flash[:success] = "Location pinned!"
       puts "Location pinned!"
-      redirect_to map_path
     else
       flash[:error] = "Failed to pin location."
       puts "Failed to pin location."
-      redirect_to map_path
     end
+    redirect_to map_path
   end
 
   def update
