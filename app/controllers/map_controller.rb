@@ -1,4 +1,7 @@
 class MapController < ApplicationController
+
+  require_relative '../../lib/avatar-scraper'
+
   def show
   end
 

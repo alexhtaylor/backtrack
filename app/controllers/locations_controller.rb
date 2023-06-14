@@ -10,14 +10,14 @@ class LocationsController < ApplicationController
     puts "Running Create Action"
     @location = current_user.locations.new(location_params)
     puts "new locationnn #{@location}"
-    @location.latitude = session[:latitude]
-    @location.longitude = session[:longitude]
+    # @location.latitude = session[:latitude]
+    # @location.longitude = session[:longitude]
     @location.current_location = true
     @location.visible = true
     # Testing
-    # @location.latitude = 23
-    # @location.longitude = 74
-    #
+    @location.latitude = 23
+    @location.longitude = 74
+
     @location.datetime = DateTime.current
 
     if @location.save

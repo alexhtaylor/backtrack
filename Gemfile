@@ -47,7 +47,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver', '>= 4.0.0.rc1'
+  # gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
@@ -62,3 +62,10 @@ gem 'geocoder'
 gem 'jquery-rails'
 
 gem 'pg'
+
+gem 'nokogiri'
+gem 'open-uri'
+
+gem 'instagram-private-api'
+
+  gem 'selenium-webdriver'
