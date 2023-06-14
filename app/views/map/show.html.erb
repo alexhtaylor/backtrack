@@ -115,7 +115,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
   var latitude = position.coords.latitude
   var longitude = position.coords.longitude
 
-  // send the location data to the server-side
+  // send the location data to the server-side.
   $.ajax({
     url: '/locations',
     type: 'GET',
