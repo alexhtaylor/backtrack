@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 var map
 
 // Adding all markers to the map
-function addMarkersToMap() {
+function addMarkersToMap(given_latitude, given_longitude) {
   // Getting an array of all the current user's friends
   <% friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id) %>
   <% friend_locations = Location.where(user_id: friend_ids_array, current_location: true) %>
@@ -100,7 +100,7 @@ function addMarkersToMap() {
   <% end %>
 
 // adding marker for your own location (not taken from database)
-    var marker = L.marker([<%= session[:latitude] %>, <%= session[:longitude] %>], {icon: L.icon({
+    var marker = L.marker([given_latitude, given_longitude], {icon: L.icon({
         iconUrl: "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
         iconSize: [25, 41],
@@ -141,7 +141,7 @@ if (navigator.geolocation) {
   attribution: 'Map data &copy Esri'
 }).addTo(map)
 
-    addMarkersToMap()
+    addMarkersToMap(newLatitude, newLongitude)
     map.setView([newLatitude, newLongitude], 13)
   })
 } else {
@@ -151,7 +151,7 @@ if (navigator.geolocation) {
     attribution: 'Map data &copy OpenStreetMap contributors'
   }).addTo(map)
 
-  addMarkersToMap()
+  addMarkersToMap(<%= @latitude %> <%= @longitude %>)
 }
 
 </script>
