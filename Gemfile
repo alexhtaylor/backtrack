@@ -68,4 +68,4 @@ gem 'open-uri'
 
 gem 'instagram-private-api'
 
-  gem 'selenium-webdriver'
+gem 'selenium-webdriver'
