@@ -147,8 +147,8 @@ navigator.geolocation.getCurrentPosition(function(position) {
       var newLongitude = position.coords.longitude
       var newLatitude = position.coords.latitude
 
-      document.getElementById('latitude').textContent = newLatitude;
-      document.getElementById('longitude').textContent = newLongitude;
+      document.getElementById('latitude').textContent = `latitude: ${newLatitude}`;
+      document.getElementById('longitude').textContent = `longitude: ${newLongitude}`;
 
       map = L.map('map').setView([newLatitude, newLongitude], 100)
       // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
