@@ -116,11 +116,11 @@ body {
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.45);
   transition: opacity 0.3s ease-out;
-  opacity: 0;
+  display: none;
 
 }
 .active {
-  opacity: 1;
+  display: block;
 }
 
 .add-friend {
@@ -150,7 +150,7 @@ ul {
   // box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 5px;
   border: 2px solid black;
-  cursor: pointer;
+  cursor: auto;
   margin: 3px;
 
   @media (pointer: coarse) {

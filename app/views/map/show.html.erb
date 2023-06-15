@@ -5,10 +5,11 @@
     </div>
 
         <div class="logo-container">
-      <%= image_tag scrape_logo('https://www.instagram.com/zandertaylor') %>
+      <%# <%= image_tag image_proxy_path(url: 'https://scontent-lcy1-1.cdninstagram.com/v/t51.2885-19/352158661_639850591025663_661681514093436606_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-lcy1-1.cdninstagram.com&_nc_cat=111&_nc_ohc=HhuGXo3fSnYAX_jLLLl&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfCex6oO4s0rF91vN5Tj_2aghlyY-cyKw9Ar5GAnkF3zjg&oe=648E12C5&_nc_sid=f70a57') %>
+            <%# <%= image_tag 'https://scontent-lcy1-1.cdninstagram.com/v/t51.2885-19/352158661_639850591025663_661681514093436606_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-lcy1-1.cdninstagram.com&_nc_cat=111&_nc_ohc=HhuGXo3fSnYAX_jLLLl&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfCex6oO4s0rF91vN5Tj_2aghlyY-cyKw9Ar5GAnkF3zjg&oe=648E12C5&_nc_sid=f70a57' %>
     </div>
 
-  <div id="map" ></div>
+  <div id="map"></div>
 
   <div class="friends-dropdown">
     <button id="friends-dropdown-button">Friends</button>
@@ -50,13 +51,13 @@
 </div>
 
 <!-- Include Leaflet JS directly -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <script>
 
 
-// creating a locaiton instance on load so friends can see where you are
+// creating a location instance on load so friends can see where you are
 document.addEventListener("DOMContentLoaded", function() {
   // Retrieve the CSRF token from the meta tag
   var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -78,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function() {
   button.addEventListener('click', () => {
     dropdownContent.classList.toggle('active')
   })
+
+
+window.onload = function() {
 
 var map
 
@@ -103,16 +107,18 @@ function addMarkersToMap(given_latitude, given_longitude) {
         .bindPopup(`<p><%= User.find_by(id: l.user_id).first_name %> (<a href="https://www.instagram.com/<%= User.find_by(id: l.user_id).username %>" target="_blank">@<%= User.find_by(id: l.user_id).username %></a>)</p>`).openPopup()
   <% end %>
 
-// adding marker for your own location (not taken from database)
-    var marker = L.marker([given_latitude, given_longitude], {icon: L.icon({
-        iconUrl: "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      })}).addTo(map)
-    .bindPopup("<%= "You" %>").openPopup()
+  if (given_latitude && given_longitude) {
+  // adding marker for your own location (not taken from database)
+      var marker = L.marker([given_latitude, given_longitude], {icon: L.icon({
+          iconUrl: "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        })}).addTo(map)
+      .bindPopup("<%= "You" %>").openPopup()
+  }
 }
 
 navigator.geolocation.getCurrentPosition(function(position) {
@@ -131,31 +137,35 @@ navigator.geolocation.getCurrentPosition(function(position) {
   })
 })
 
-// Setting the loading position of the map
-if (navigator.geolocation) {
-  console.log("using geolocation")
-  navigator.geolocation.getCurrentPosition(function(position) {
-    var newLongitude = position.coords.longitude
-    var newLatitude = position.coords.latitude
-    map = L.map('map').setView([newLatitude, newLongitude], 100)
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //   attribution: 'Map data &copy OpenStreetMap contributors'
-    // }).addTo(map)
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Map data &copy Esri'
-}).addTo(map)
-
-    addMarkersToMap(newLatitude, newLongitude)
-    map.setView([newLatitude, newLongitude], 13)
-  })
-} else {
-  console.log("using ip address")
-  map = L.map('map').setView([<%= @latitude %>, <%= @longitude %>], 13)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy OpenStreetMap contributors'
+  // Setting the loading position of the map
+  if (navigator.geolocation) {
+    console.log("using geolocation")
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var newLongitude = position.coords.longitude
+      var newLatitude = position.coords.latitude
+      map = L.map('map').setView([newLatitude, newLongitude], 100)
+      // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      //   attribution: 'Map data &copy OpenStreetMap contributors'
+      // }).addTo(map)
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Map data &copy Esri'
   }).addTo(map)
 
-  addMarkersToMap(<%= @latitude %> <%= @longitude %>)
-}
+      addMarkersToMap(newLatitude, newLongitude)
+      map.setView([newLatitude, newLongitude], 13)
+    })
+  } else {
+
+    console.log(`using ip address, latitude is ${<%= @latitude_from_ip %>}`)
+
+      map = L.map('map').setView([<%= @latitude_from_ip %>, <%= @longitude_from_ip %>], 100)
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Map data &copy Esri'
+      }).addTo(map)
+
+      addMarkersToMap()
+      map.setView([<%= @latitude_from_ip %>, <%= @longitude_from_ip %>], 13)
+  }
+};
 
 </script>

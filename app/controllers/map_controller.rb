@@ -3,6 +3,14 @@ class MapController < ApplicationController
   require_relative '../../lib/avatar-scraper'
 
   def show
+    # Loading location data from ip address as backup
+    ip_address = Net::HTTP.get(URI("https://api.ipify.org?format=json"))
+    ip_address = JSON.parse(ip_address)["ip"]
+    current_location = Geocoder.search(ip_address).first || Geocoder.search('New York, NY').first
+    @latitude_from_ip = current_location.latitude
+    @longitude_from_ip = current_location.longitude
+
+    puts "latitude from ip!!!!!!!!!!!!!!:  #{@latitude_from_ip}"
   end
 
   def request_friend
@@ -21,10 +29,10 @@ class MapController < ApplicationController
         user.pending_request_ids = [current_user.id]
         user.save
       end
-      puts "NOW REDIRECTING"
-      redirect_to map_path(params[:id]), notice: "Friend request sent successfully."
+      # puts "NOW REDIRECTING"
+      # redirect_to map_path(params[:id]), notice: "Friend request sent successfully."
     else
-      redirect_to map_path(params[:id]), alert: "User not found."
+      # redirect_to map_path(params[:id]), alert: "User not found."
     end
   end
 
