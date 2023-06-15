@@ -14,6 +14,9 @@
   <div id="latitude"></div>
   <div id="longitude"></div>
 
+    <div id="latitude-from-ip">from ip: <%= @latitude_from_ip %></div>
+    <div id="longitude-from-ip">from ip: <%= @longitude_from_ip %></div>
+
   <div class="friends-dropdown">
     <button id="friends-dropdown-button">Friendsies</button>
     <div class="friends-dropdown-content">
@@ -147,8 +150,8 @@ navigator.geolocation.getCurrentPosition(function(position) {
       var newLongitude = position.coords.longitude
       var newLatitude = position.coords.latitude
 
-      document.getElementById('latitude').textContent = `latitude: ${newLatitude}`;
-      document.getElementById('longitude').textContent = `longitude: ${newLongitude}`;
+      document.getElementById('latitude').textContent = `latitude from geo: ${newLatitude}`;
+      document.getElementById('longitude').textContent = `longitude from geo: ${newLongitude}`;
 
       map = L.map('map').setView([newLatitude, newLongitude], 100)
       // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -163,6 +166,9 @@ navigator.geolocation.getCurrentPosition(function(position) {
     })
   } else {
 
+
+      document.getElementById('latitude').textContent = `latitude from ip: ${<%= @latitude_from_ip %>}`;
+      document.getElementById('longitude').textContent = `longitude from ip: ${<%= @longitude_from_ip %>}`;
     console.log(`using ip address, latitude is ${<%= @latitude_from_ip %>}`)
 
       map = L.map('map').setView([<%= @latitude_from_ip %>, <%= @longitude_from_ip %>], 100)
