@@ -14,6 +14,8 @@
   <div id="latitude"></div>
   <div id="longitude"></div>
 
+    <div id="note"></div>
+
     <div id="latitude-from-ip">from ip: <%= @latitude_from_ip %></div>
     <div id="longitude-from-ip">from ip: <%= @longitude_from_ip %></div>
 
@@ -145,6 +147,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 
   // Setting the loading position of the map
   if (navigator.geolocation) {
+    document.getElementById('note').textContent = `navigator.geolocation is true`;
     console.log("using geolocation")
     navigator.geolocation.getCurrentPosition(function(position) {
       var newLongitude = position.coords.longitude
@@ -167,8 +170,8 @@ navigator.geolocation.getCurrentPosition(function(position) {
   } else {
 
 
-      document.getElementById('latitude').textContent = `latitude from ip: ${<%= @latitude_from_ip %>}`;
-      document.getElementById('longitude').textContent = `longitude from ip: ${<%= @longitude_from_ip %>}`;
+      document.getElementById('latitude').textContent = `latitude from ip, being used: ${<%= @latitude_from_ip %>}`;
+      document.getElementById('longitude').textContent = `longitude from ip, being used: ${<%= @longitude_from_ip %>}`;
     console.log(`using ip address, latitude is ${<%= @latitude_from_ip %>}`)
 
       map = L.map('map').setView([<%= @latitude_from_ip %>, <%= @longitude_from_ip %>], 100)
