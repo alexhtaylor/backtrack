@@ -146,7 +146,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 })
 
   // Setting the loading position of the map
-  if (navigator.geolocation) {
+  if (navigator.geolocation === false) {
     document.getElementById('note').textContent = `navigator.geolocation is true`;
     console.log("using geolocation")
     navigator.geolocation.getCurrentPosition(function(position) {
