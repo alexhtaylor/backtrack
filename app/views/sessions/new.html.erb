@@ -6,16 +6,24 @@
 
 <%= form_with url: sessions_path, local: true do |form| %>
   <% if @user && @user.errors.any? %>
-    <div class="alert alert-danger">
-      <% @user.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
-      <% end %>
+    <div class="alert login">
+      <div class = "alert-messages">
+        <% @user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <button type="button" class="closebtn" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
   <% end %>
 
   <% if flash[:alert] %>
-    <div class="alert alert-danger">
+    <div class="alert login">
       <%= flash[:alert] %>
+    <button type="button" class="closebtn" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </div>
   <% end %>
 
@@ -79,4 +87,20 @@
     dropdownToggle.style.display = dropdownToggle.style.display === 'block' ? 'block' : 'none';
     console.log('dropdown toggle', dropdownToggle)
   });
+
+  const alertContainer = document.querySelector('.alert')
+  const closeButton = document.querySelector('.closebtn')
+
+  closeButton.addEventListener('click', () => {
+    alertContainer.remove();
+});
+
+
+
+  setTimeout(() => {
+  const parentElement = alertContainer.parentElement;
+  if (parentElement) {
+    parentElement.removeChild(alertContainer);
+  }
+  }, 7000); // Hide the alert after 3 seconds (adjust as needed)
 </script>

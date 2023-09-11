@@ -9,13 +9,21 @@ class MapController < ApplicationController
     current_location = Geocoder.search(ip_address).first || Geocoder.search('New York, NY').first
     @latitude_from_ip = current_location.latitude
     @longitude_from_ip = current_location.longitude
-
-    puts "latitude from ip!!!!!!!!!!!!!!:  #{@latitude_from_ip}"
+    @friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id")
+    .where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id)
+    .where.not(id: current_user.id).distinct.pluck(:id)
+    @friend_locations = Location.where(user_id: @friend_ids_array, current_location: true)
+    @friends = User.where(id: @friend_ids_array.to_a)
+    @friends_by_id = {}
+    @friends.each do |friend|
+      @friends_by_id[friend.id] = friend
+    end
   end
 
   def request_friend
     user = User.find_by(username: params[:username])
-    friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id)
+    # friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id)
+    friend_ids_array = params[:friend_ids_array]
     puts "FRIEND IDS ARRAY: #{friend_ids_array}"
     if user
       puts "USER IS TRUE"
@@ -29,10 +37,12 @@ class MapController < ApplicationController
         user.pending_request_ids = [current_user.id]
         user.save
       end
-      # puts "NOW REDIRECTING"
-      # redirect_to map_path(params[:id]), notice: "Friend request sent successfully."
+      puts "NOW REDIRECTING"
+      redirect_to map_path(params[:id])
+      flash[:success] = 'Request sent successfully.'
     else
-      # redirect_to map_path(params[:id]), alert: "User not found."
+      redirect_to map_path(params[:id])
+      flash[:error] = 'Unable to find user.'
     end
   end
 

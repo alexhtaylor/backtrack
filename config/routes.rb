@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'map', to: 'map#show'
   get 'locations', to: 'locations#show'
   get 'sessions/new'
+  get '/sessions', to: redirect('/')
+  get '/users', to: redirect('/')
   get 'sessions/create'
   get 'sessions/destroy'
   get '/images/show', to: 'images#show', as: 'image_proxy'

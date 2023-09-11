@@ -9,6 +9,7 @@ class User < ApplicationRecord
   attribute :username
   attribute :pending_request_ids, :json, default: []
   validates :username, uniqueness: true, length: { minimum: 3 }, format: { with: /\A\w+\z/, message: "can only contain letters, numbers, and underscores" }, allow_blank: true
+  validates :email, presence: true, uniqueness: true
 
   before_validation :check_username_presence
 

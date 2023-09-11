@@ -131,6 +131,7 @@ GEM
       time
       uri
     pg (1.3.3)
+    popper_js (2.11.8)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   nokogiri
   open-uri
   pg
+  popper_js
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.2)
