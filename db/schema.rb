@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_11_214032) do
+ActiveRecord::Schema.define(version: 2023_09_20_222544) do
 
   create_table "chat_rooms", force: :cascade do |t|
     t.integer "user1_id"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2023_09_11_214032) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "username"
     t.json "pending_request_ids"
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username"
   end

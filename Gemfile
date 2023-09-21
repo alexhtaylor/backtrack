@@ -71,3 +71,8 @@ gem 'instagram-private-api'
 gem 'selenium-webdriver'
 
 gem 'popper_js'
+
+
+gem 'httparty'
+
+gem 'fileutils'

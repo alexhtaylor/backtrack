@@ -20,13 +20,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const popups = [];
 
-  map.on('load', () => {
+  // map.on('load', () => {
+  // window.onload = function() {
 
     // Get the user's location using Geolocation API
     navigator.geolocation.getCurrentPosition(function(position) {
-      var newLongitude = position.coords.longitude;
-      var newLatitude = position.coords.latitude;
-      const userLocation = [newLongitude, newLatitude];
+
+
+      var latitudeFromGeocoder = position.coords.latitude
+      var longitudeFromGeocoder = position.coords.longitude
+
+      // Testing, uncomment these to manually change the location for testing, this will update the marker for the current user and their most recent location instance at the same time
+      // var latitudeFromGeocoder = 49
+      // var longitudeFromGeocoder = 10
+      // Testing
+
+      console.log('adding fresh cood')
+
+      // send the location data to the server-side, then ruby knows our location
+      $.ajax({
+        url: '/locations',
+        type: 'GET',
+        dataType: 'json',
+        data: { latitude: latitudeFromGeocoder, longitude: longitudeFromGeocoder },
+        success: function(data) {
+          console.log('creating the location istance')
+          // Retrieve the CSRF token from the meta tag
+          var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+          // Create the data string including the location parameters
+          var data = `location[latitude]=${latitudeFromGeocoder}>&location[longitude]=${longitudeFromGeocoder}`
+
+          // Make an AJAX request to the create action, this is what actually triggers the new instance to be created, posisbly we can just send this without needing the previous request?
+          var xhr = new XMLHttpRequest()
+          xhr.open("POST", "/locations", true)
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+          xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+          xhr.send(data)
+        }
+      })
+
+      const userLocation = [longitudeFromGeocoder, latitudeFromGeocoder];
 
           // Add a circle layer for the user's location
           map.addSource('user-location', {
@@ -72,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             friendLocations.forEach(function(friendLocation) {
               const friendCoords = [friendLocation.longitude, friendLocation.latitude];
-              const customMarkerImageSrc = '/assets/backpack-icon-large.png';
+              const customMarkerImageSrc = friendsById[friendLocation.user_id].avatar ? friendsById[friendLocation.user_id].avatar : '/assets/backpack-icon-large.png';
               var popup = new mapboxgl.Popup().setHTML(`<p style="font-size: 36px;">${friendsById[friendLocation.user_id].first_name}</p>`);
 
               const customMarker = new mapboxgl.Marker({
@@ -145,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //   console.log('removing popups')
     //   popups.forEach((p) => p.remove());
     // });
-  });
+  // };
 });
 
 

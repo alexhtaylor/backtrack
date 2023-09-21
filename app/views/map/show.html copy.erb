@@ -129,21 +129,21 @@ function addMarkersToMap(given_latitude, given_longitude) {
   }
 }
 
-navigator.geolocation.getCurrentPosition(function(position) {
-  var latitude = position.coords.latitude
-  var longitude = position.coords.longitude
+// navigator.geolocation.getCurrentPosition(function(position) {
+//   var latitude = position.coords.latitude
+//   var longitude = position.coords.longitude
 
-  // send the location data to the server-side.
-  $.ajax({
-    url: '/locations',
-    type: 'GET',
-    dataType: 'json',
-    data: { latitude: latitude, longitude: longitude },
-    success: function(data) {
-      // handle the server-side response
-    }
-  })
-})
+//   // send the location data to the server-side.
+//   $.ajax({
+//     url: '/locations',
+//     type: 'GET',
+//     dataType: 'json',
+//     data: { latitude: latitude, longitude: longitude },
+//     success: function(data) {
+//       // handle the server-side response
+//     }
+//   })
+// })
 
   // Setting the loading position of the map
   console.log("navigator geolocation:", navigator.geolocation )

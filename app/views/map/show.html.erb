@@ -3,7 +3,7 @@
 <div class="main-container">
   <%# <%= current_user.username %>
     <div class="logo-container">
-      <img src="/assets/backtracklogosmall.png" alt="Logo">
+      <img src=<%= current_user.avatar %> alt="Logo">
     </div>
     <% if flash[:success].present? %>
       <script>
@@ -14,8 +14,8 @@
         showAlert("<%= flash[:error] %>", false);
       </script>
     <% end %>
-
   <div id="map">
+
     <div class="friends-dropdown">
       <button id="friends-dropdown-button">Friendsies</button>
       <div class="friends-dropdown-content">
@@ -74,22 +74,53 @@
   var friendsById = <%= raw @friends_by_id.to_json %>
   var latitudeFromIp = <%= @latitude_from_ip %>
   var longitudeFromIp = <%= @longitude_from_ip %>
+  var latitudeFromGeocoder
+
+window.onload = function() {
+
+// Sending new location informaiton to server side to use to create new location instance
+// navigator.geolocation.getCurrentPosition(function(position) {
+//   var latitudeFromGeocoder = position.coords.latitude
+//   var longitudeFromGeocoder = position.coords.longitude
+
+//   // Testing
+//   var latitudeFromGeocoder = 20
+//   var longitudeFromGeocoder = 25
+//   // Testing
+
+//   console.log('defo defined now')
+
+//   // send the location data to the server-side.
+//   $.ajax({
+//     url: '/locations',
+//     type: 'GET',
+//     dataType: 'json',
+//     data: { latitude: latitudeFromGeocoder, longitude: longitudeFromGeocoder },
+//     success: function(data) {
+//       // handle the server-side response
+//     }
+//   })
+// })
+}
 
 // creating a location instance on load so friends can see where you are
-document.addEventListener("DOMContentLoaded", function() {
-  // Retrieve the CSRF token from the meta tag
-  var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+// document.addEventListener("DOMContentLoaded", function() {
 
-  // Create the data string including the location parameters
-  var data = "location[latitude]=<%= session[:latitude] %>&location[longitude]=<%= session[:longitude] %>"
+//     console.log('creating the location istance')
+//   // Retrieve the CSRF token from the meta tag
+//   var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-  // Make an AJAX request to the create action
-  var xhr = new XMLHttpRequest()
-  xhr.open("POST", "/locations", true)
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-  xhr.setRequestHeader("X-CSRF-Token", csrfToken)
-  xhr.send(data)
-})
+//   // Create the data string including the location parameters
+//   var data = "location[latitude]=<%= session[:latitude] %>&location[longitude]=<%= session[:longitude] %>"
+
+//   // Make an AJAX request to the create action
+//   var xhr = new XMLHttpRequest()
+//   xhr.open("POST", "/locations", true)
+//   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+//   xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+//   xhr.send(data)
+
+// })
 
 </script>
 

@@ -1,6 +1,6 @@
 class MapController < ApplicationController
 
-  require_relative '../../lib/avatar-scraper'
+  # require_relative '../../lib/avatar-scraper'
 
   def show
     # Loading location data from ip address as backup
@@ -28,11 +28,11 @@ class MapController < ApplicationController
     if user
       puts "USER IS TRUE"
 
-      if user.pending_request_ids && !user.pending_request_ids.include?(current_user.id) && !friend_ids_array.include?(user.id) && user.id != current_user.id && !current_user.pending_request_ids&.include?(user.id)
+      if user.pending_request_ids? && !user.pending_request_ids.include?(current_user.id) && !friend_ids_array.include?(user.id) && user.id != current_user.id && !current_user.pending_request_ids&.include?(user.id)
         puts "EXISTING ARRAY BEING ADDED TO"
         user.pending_request_ids << current_user.id
         user.save
-      elsif !user.pending_request_ids && !friend_ids_array.include?(user.id) && user.id != current_user.id && !current_user.pending_request_ids&.include?(user.id)
+      elsif !user.pending_request_ids? && !friend_ids_array&.include?(user.id) && user.id != current_user.id && !current_user.pending_request_ids&.include?(user.id)
         puts "NEW REQUEST ARRAY CREATED"
         user.pending_request_ids = [current_user.id]
         user.save
