@@ -15,9 +15,6 @@ class LocationsController < ApplicationController
     @location.longitude = session[:longitude]
     @location.current_location = true
     @location.visible = true
-    # Testing
-    # @location.latitude = 1.270383
-    # @location.longitude = 47.891449
 
     @location.datetime = DateTime.current
 

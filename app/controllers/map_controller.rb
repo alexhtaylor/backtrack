@@ -21,12 +21,14 @@ class MapController < ApplicationController
   end
 
   def request_friend
+    # user is the user who will receive the request
     user = User.find_by(username: params[:username])
     # friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id).where.not(id: current_user.id).distinct.pluck(:id)
-    friend_ids_array = params[:friend_ids_array]
+    friend_ids_array = params[:friend_ids_array].map { |str| str.to_i }
     puts "FRIEND IDS ARRAY: #{friend_ids_array}"
-    if user
-      puts "USER IS TRUE"
+    puts user.id
+    if user && !friend_ids_array.include?(user.id) && !user.pending_request_ids.include?(current_user.id) && !current_user.pending_request_ids.include?(user.id)
+      puts "USER IS TRUE and not already friends, or already pending to become friends"
 
       if user.pending_request_ids? && !user.pending_request_ids.include?(current_user.id) && !friend_ids_array.include?(user.id) && user.id != current_user.id && !current_user.pending_request_ids&.include?(user.id)
         puts "EXISTING ARRAY BEING ADDED TO"
@@ -40,6 +42,15 @@ class MapController < ApplicationController
       puts "NOW REDIRECTING"
       redirect_to map_path(params[:id])
       flash[:success] = 'Request sent successfully.'
+    elsif user && friend_ids_array.include?(user.id) && !user.pending_request_ids.include?(current_user.id) && !current_user.pending_request_ids.include?(user.id)
+      redirect_to map_path(params[:id])
+      flash[:error] = "You are already friends with #{user.username}."
+    elsif user && !friend_ids_array.include?(user.id) && user.pending_request_ids.include?(current_user.id) && !current_user.pending_request_ids.include?(user.id)
+      redirect_to map_path(params[:id])
+      flash[:error] = "Friend request to #{user.username} already pending"
+    elsif user && !friend_ids_array.include?(user.id) && !user.pending_request_ids.include?(current_user.id) && current_user.pending_request_ids.include?(user.id)
+      redirect_to map_path(params[:id])
+      flash[:error] = "You already have a request from #{user.username}"
     else
       redirect_to map_path(params[:id])
       flash[:error] = 'Unable to find user.'

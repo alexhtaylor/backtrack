@@ -1,7 +1,6 @@
 
 
-<div class="main-container">
-  <%# <%= current_user.username %>
+<%# <div class="main-container"> %>
     <div class="logo-container">
       <img src=<%= current_user.avatar %> alt="Logo">
     </div>
@@ -53,19 +52,10 @@
       </div>
     </div>
   </div>
-
-  <div id="latitude"></div>
-  <div id="longitude"></div>
-
-    <div id="note"></div>
-
-    <div id="latitude-from-ip">from ip: <%= @latitude_from_ip %></div>
-    <div id="longitude-from-ip">from ip: <%= @longitude_from_ip %></div>
-</div>
+<%# </div> %>
 
 <!-- Include Leaflet JS directly -->
-<%# <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> %>
-   <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <script>
@@ -75,53 +65,6 @@
   var latitudeFromIp = <%= @latitude_from_ip %>
   var longitudeFromIp = <%= @longitude_from_ip %>
   var latitudeFromGeocoder
-
-window.onload = function() {
-
-// Sending new location informaiton to server side to use to create new location instance
-// navigator.geolocation.getCurrentPosition(function(position) {
-//   var latitudeFromGeocoder = position.coords.latitude
-//   var longitudeFromGeocoder = position.coords.longitude
-
-//   // Testing
-//   var latitudeFromGeocoder = 20
-//   var longitudeFromGeocoder = 25
-//   // Testing
-
-//   console.log('defo defined now')
-
-//   // send the location data to the server-side.
-//   $.ajax({
-//     url: '/locations',
-//     type: 'GET',
-//     dataType: 'json',
-//     data: { latitude: latitudeFromGeocoder, longitude: longitudeFromGeocoder },
-//     success: function(data) {
-//       // handle the server-side response
-//     }
-//   })
-// })
-}
-
-// creating a location instance on load so friends can see where you are
-// document.addEventListener("DOMContentLoaded", function() {
-
-//     console.log('creating the location istance')
-//   // Retrieve the CSRF token from the meta tag
-//   var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-
-//   // Create the data string including the location parameters
-//   var data = "location[latitude]=<%= session[:latitude] %>&location[longitude]=<%= session[:longitude] %>"
-
-//   // Make an AJAX request to the create action
-//   var xhr = new XMLHttpRequest()
-//   xhr.open("POST", "/locations", true)
-//   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-//   xhr.setRequestHeader("X-CSRF-Token", csrfToken)
-//   xhr.send(data)
-
-// })
-
 </script>
 
 <%= javascript_include_tag 'map' %>
