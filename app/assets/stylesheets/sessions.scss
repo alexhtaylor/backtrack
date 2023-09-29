@@ -27,9 +27,9 @@ form input {
   cursor: pointer;
   margin: 3px;
 
-  @media (pointer: coarse) {
-    font-size: 30px;
-  }
+  // @media (pointer: coarse) {
+  //   font-size: 30px;
+  // }
 }
 
 .dropdown-toggle {
@@ -42,9 +42,9 @@ form input {
   margin: 3px;
   display: block;
 
-  @media (pointer: coarse) {
-    font-size: 30px;
-  }
+  // @media (pointer: coarse) {
+  //   font-size: 30px;
+  // }
 
   &:hover {
     text-decoration: underline;

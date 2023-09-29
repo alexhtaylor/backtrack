@@ -76,3 +76,5 @@ gem 'popper_js'
 gem 'httparty'
 
 gem 'fileutils'
+
+gem 'google-cloud-storage'
