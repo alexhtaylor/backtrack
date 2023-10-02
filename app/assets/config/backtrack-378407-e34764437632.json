@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "backtrack-378407",
+  "private_key_id": "e34764437632535e325c890e0484d0efe6847221",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1gZQy6FzdmQBv\nMzs4GOQNyYarrTCb+BduKMuYKYYXXHXMNogE0cCghtFG1q3VWTz+/5fuaFyXT3WS\n1pucPZel+xI5LdirYLpl6ueJQC7D8LvBkz46DX5Ugn1/he5rKC5Yoxf4E9vOJJ9l\nGk7wRxII6aOHdXUvUL/a/+pasyzdQoaIsrYvBSR78LivjjUB9RT+JniIT/yTn9gh\n8LVXrDXeZZJjGzo61T79yEUC9Q9UKqA/oTz8Q22pqDs2CAqIjYk4Oyy7wOG7jzsp\nAQYxEe3OOndH2q2YtlP08Ess2qYEDFUtnghOM4tNJD7nqqCm4XNWcVfBQ9pmBC28\nISeW59gJAgMBAAECggEAH60pHYdS6bORkVaaD6y8ZDGXCLAViyrNgAKroXchuUMA\nJe8gZuLqYLmWnWvK87B6xi/6JnfdLOUHqmQ8zRQsuqFqKUN4jFQ5w56u4NOsNbL2\nOY7GbeA7+2i4mUBY/yeIixyPitKAamYW0VC5lRJ6MccArJvRozvO99vw3PpnKoft\nx3RjWbF9+GjnxPO2xZs4HviFnpAAJ+4sihV48HVQDDG+WMPTz/obgh8me3vO4757\nsn2TFTKJUH1t80SHv8HuKE+II3I0BgqU/xbGWZIMhSgwI6BSEgUXyVJNFC6Db8mm\nY0v648792g5oMjtRT697zCmQrV4U/vA+wqbKcNsulwKBgQDmE/cu9xih4tpRK442\nXR2wqA/5DoR0nAESWwvz+D1pSrl+YA82OIZ6ODBjfJe6WwKjVAgW2zM2QOyNIqqr\n3PtO/ykFCRFunkDlPQDR7aFhC0UoEoTOeBPnTzZ90PQC6WB5P4xViSuV7/vD1Iy1\n4fhCtdnd/fjBwwCOaPeUNjaM+wKBgQDJ9K2tg1tBUlP2pNAog7FtFWYzN3Y3HKrF\nMHAkVq/R+IssygYJrRlot/hQTdp5s6lN479A51vKbZWtAhBAH3EDgORlKS6SY3kK\nZkJbZxjl3Jqb3IXECXniADSEPFbqllJTOt3SmjGQX3gLgYSvd3X3FB9DQ1DF9I83\nt/BDYRqXywKBgBHrHCUcOV7iO/52Ve0F83n+nL/Y0ZgDTlIPpS6q9p1spGWjNYwT\neuWp2prk6SwqSlpOARNGnwZqqAGV4ZTg8PGGDbvGqQTkbklsJtQynY7hQdGNH6q0\nz1gEY0oJK/fOFSVcPaGrvSlAN2tY8lx37M3FO+J+FRGCDlkI878nObhhAoGAB33C\n/3+y395s7OY6LnaMG07C5r107iBrGTttvXtVtEUy7GtmA+/e1GqWlGv+4arPaes7\nye2LExwzhCJide50o7uhPTtk1dtIvyEB7yAI5WXkekmY0KfFVKPLTuhqFPOUhC/X\n0JsVoZRZAJxCTrvwrUSa0ETr9xvWQCvbhrRQZzcCgYEAuq9WySAfgjiTgdt5lvT4\nKrPjVG/c+I+A7iq7XxF0Uk9PGRNp5dbEplrzVb0Dj4MYDNcGEC4sjd7dGcCGtkeo\njukQ1bVrTJLGsTqR4x+I+Hh/8kcMJiuQWmTq9BHQxMTIGaFoB99nS4axnuLgcUSC\nm1LnBqlklBKFrFLTKM08AEY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "backtrack@backtrack-378407.iam.gserviceaccount.com",
+  "client_id": "111252340309174009286",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/backtrack%40backtrack-378407.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

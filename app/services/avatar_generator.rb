@@ -38,14 +38,18 @@ class AvatarGenerator
     end
 
     # Use backticks to run the JavaScript file and pass the image URL
-    puts 'about to trigger javascript'
+    if profile_pic_src
+      puts 'about to trigger javascript'
 
-    ENV['USERNAME'] = username
-    ENV['SRC'] = profile_pic_src
-    system("node app/assets/javascripts/avatarUpload.js")
+      ENV['USERNAME'] = username
+      ENV['SRC'] = profile_pic_src
+      system("node app/assets/javascripts/avatarUpload.js")
 
-    puts 'ruby generator file complete'
+      puts 'ruby generator file complete'
 
-    "https://storage.googleapis.com/backtrack-avatars/#{username}.jpg"
+      "https://storage.cloud.google.com/backtrack-profile-images/#{username}.jpg"
+    else
+      '/assets/backpack-icon-large.png'
+    end
   end
 end

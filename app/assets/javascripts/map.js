@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container: 'map',
     style: 'mapbox://styles/alxtyl/clmhseib3007m01qt5ud61vxg',
     // center: [-0.1, 51], // Default center
-    zoom: 3, // Default zoom
+    zoom: 1.5, // Default zoom
   });
 
 
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Set the custom image as the marker icon
       customMarker.getElement().innerHTML = `<img src="${customMarkerImageSrc}" alt="Custom Marker" class="backpack-marker" >`;
 
-      var popup = new mapboxgl.Popup().setHTML(`<p style="font-size: 36px;">${friendsById[friendLocation.user_id].first_name}</p>`);
+      var popup = new mapboxgl.Popup().setHTML(`<a href="https://instagram.com/${friendsById[friendLocation.user_id].username}" target="blank"><p style="font-size: 36px;">${friendsById[friendLocation.user_id].first_name}</p></a>`);
       customMarker.setPopup(popup);
     });
   })

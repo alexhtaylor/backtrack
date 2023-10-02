@@ -1,29 +1,37 @@
 // Place all the styles related to the Sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+body {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('assets/signup-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.form-control::placeholder {
+  color: white; /* Change the placeholder text color to white */
+}
+
 .signup-logo-container {
   text-align: center;
   z-index: 99999;
   margin-top: 10vh;
-  padding: 50px 0px 20px;
+  padding: 50px 0px 5px;
 }
 
 .signup-logo-container img {
   max-width: 100%;
   height: 40px;
-
-  @media (pointer: coarse) {
-    height: 70px;
-  }
 }
 
 
 form input {
   background-color: rgba(255, 255, 255, 0.45);
-  color: black;
+  color: white;
   // box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 5px;
-  border: 2px solid black;
+  border: 2px solid white;
   cursor: pointer;
   margin: 3px;
 
@@ -34,10 +42,10 @@ form input {
 
 .dropdown-toggle {
   background-color: rgba(255, 255, 255, 0);
-  color: black;
+  color: white;
   // box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 5px;
-  border: 0px solid black;
+  border: 0px solid white;
   cursor: pointer;
   margin: 3px;
   display: block;
