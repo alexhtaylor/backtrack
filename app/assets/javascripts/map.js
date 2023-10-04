@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     friendLocations.forEach(function(friendLocation) {
       const friendCoords = [friendLocation.longitude, friendLocation.latitude];
-      const customMarkerImageSrc = friendsById[friendLocation.user_id].avatar ? friendsById[friendLocation.user_id].avatar : '/assets/backpack-icon-large.png';
+      const customMarkerImageSrc = friendsById[friendLocation.user_id].avatar ? friendsById[friendLocation.user_id].avatar : '/assets/backpack-icon-large-1.png';
       var popup = new mapboxgl.Popup().setHTML(`<p style="font-size: 36px;">${friendsById[friendLocation.user_id].first_name}</p>`);
 
       const customMarker = new mapboxgl.Marker({
@@ -116,10 +116,42 @@ document.addEventListener('DOMContentLoaded', () => {
       customMarker.setLngLat(friendCoords).addTo(map);
 
       // Set the custom image as the marker icon
-      customMarker.getElement().innerHTML = `<img src="${customMarkerImageSrc}" alt="Custom Marker" class="backpack-marker" >`;
+      customMarker.getElement().innerHTML = `<img src="${customMarkerImageSrc}" alt="Custom Marker" class="marker ${customMarkerImageSrc.includes("backpack-icon-large") ? "" : "avatar-marker"}" >`;
 
-      var popup = new mapboxgl.Popup().setHTML(`<a href="https://instagram.com/${friendsById[friendLocation.user_id].username}" target="blank"><p style="font-size: 36px;">${friendsById[friendLocation.user_id].first_name}</p></a>`);
+      var popup = new mapboxgl.Popup().setHTML(popupHTML(friendLocation, friendsById));
       customMarker.setPopup(popup);
     });
   })
 });
+
+function lastSeen(location) {
+  const locationDate = new Date(location.datetime)
+  const currentTime = new Date()
+  const timeDifferenceMs = currentTime - locationDate;
+  const secondsAgo = Math.floor(timeDifferenceMs / 1000);
+  const minutesAgo = Math.floor(secondsAgo / 60);
+  const hoursAgo = Math.floor(minutesAgo / 60);
+  const daysAgo = Math.floor(hoursAgo / 24);
+
+  console.log("hellooo:", timeDifferenceMs)
+
+  if (daysAgo > 0) {
+    result = `${daysAgo} day(s) ago`;
+  } else if (hoursAgo > 0) {
+    result = `${hoursAgo} hour(s) ago`;
+  } else if (minutesAgo > 0) {
+    result = `${minutesAgo} minute(s) ago`;
+  } else {
+    result = `${secondsAgo} second(s) ago`;
+  }
+
+  return result
+}
+
+function popupHTML(friendLocation, friendsById) {
+  const username = friendsById[friendLocation.user_id].username
+  const firstName = friendsById[friendLocation.user_id].first_name
+  const lastSeenString = lastSeen(friendLocation)
+
+  return `<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<a href="https://instagram.com/${username}" target="blank"><p style="margin: 0;">@${username}</p></a>)</span><p style="margin: 0px;">${lastSeen(friendLocation)}</p>`
+}

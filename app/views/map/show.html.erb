@@ -1,7 +1,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%# <div class="main-container"> %>
-    <div class="avatar-container">
+    <div class="avatar-container <%=current_user.avatar.include?('backpack-icon-large') ? "" : "profile-pic"%>">
       <img src=<%= current_user.avatar %> alt="Logo">
     </div>
     <div class="logo-container">

@@ -49,7 +49,7 @@ class AvatarGenerator
 
       "https://storage.cloud.google.com/backtrack-profile-images/#{username}.jpg"
     else
-      '/assets/backpack-icon-large.png'
+      "/assets/backpack-icon-large-#{rand(1..10)}.png"
     end
   end
 end
