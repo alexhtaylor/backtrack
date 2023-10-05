@@ -13,6 +13,10 @@ body {
   color: white; /* Change the placeholder text color to white */
 }
 
+::-webkit-input-placeholder {
+  color: white;
+}
+
 .signup-logo-container {
   text-align: center;
   z-index: 99999;

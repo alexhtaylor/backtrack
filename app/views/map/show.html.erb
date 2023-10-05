@@ -32,7 +32,15 @@
           <ul>
             <% current_user.pending_request_ids.each do |id| %>
               <% user = User.find_by(id: id) %>
-              <li><div><%= user.first_name %> (<a href="https://www.instagram.com/<%= user.username %>" target="_blank">@<%= user.username %></a>)</div>
+              <li>
+                <div>
+                  <%= user.first_name %>
+                  <% if user.instagram_account %>
+                    (<a href="https://www.instagram.com/<%= user.username %>" target="_blank">@<%= user.username %></a>)
+                  <% else %>
+                    (@<%= user.username %>)
+                  <% end %>
+                </div>
                 <div class="accept-reject">
                   <%= button_to 'Accept', accept_friend_path(user_id: user.id), method: :post %>
                   <%= button_to 'Reject', reject_friend_path(user_id: user.id), method: :post %>
@@ -46,7 +54,15 @@
           <ul>
             <% @friend_ids_array.each do |id| %>
             <% friend = User.find_by(id: id) %>
-              <li><div><%= friend.first_name %> (<a href="https://www.instagram.com/<%= friend.username %>" target="_blank">@<%= friend.username %></a>)</div>
+              <li>
+                <div>
+                  <%= friend.first_name %>
+                  <% if friend.instagram_account %>
+                    (<a href="https://www.instagram.com/<%= friend.username %>" target="_blank">@<%= friend.username %></a>)
+                  <% else %>
+                    (@<%= friend.username %>)
+                  <% end %>
+                </div>
               </li>
             <% end %>
             </ul>

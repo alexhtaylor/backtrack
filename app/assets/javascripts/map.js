@@ -152,6 +152,16 @@ function popupHTML(friendLocation, friendsById) {
   const username = friendsById[friendLocation.user_id].username
   const firstName = friendsById[friendLocation.user_id].first_name
   const lastSeenString = lastSeen(friendLocation)
+  const whatsAppNumber = friendsById[friendLocation.user_id].whatsapp_number
+  const instagramAccount = friendsById[friendLocation.user_id].instagram_account
 
-  return `<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<a href="https://instagram.com/${username}" target="blank"><p style="margin: 0;">@${username}</p></a>)</span><p style="margin: 0px;">${lastSeen(friendLocation)}</p>`
+  if (whatsAppNumber && instagramAccount) {
+    return `<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<a href="https://instagram.com/${username}" target="blank"><p style="margin: 0;">@${username}</p></a>)</span><p style="margin: 0;">${whatsAppNumber}</p><p style="margin: 0px;">${lastSeenString}</p>`
+  } else if (whatsAppNumber) {
+    return`<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<p style="margin: 0;">@${username}</p>)</span><p style="margin: 0;">${whatsAppNumber}</p><p style="margin: 0px;">${lastSeenString}</p>`
+  } else if (instagramAccount) {
+    return `<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<a href="https://instagram.com/${username}" target="blank"><p style="margin: 0;">@${username}</p></a>)</span><p style="margin: 0px;">${lastSeenString}</p>`
+  } else {
+    return `<p style="font-size: 24px; margin: 5px;">${firstName}</p><span style="display: flex;">(<p style="margin: 0;">@${username}</p>)</span><p style="margin: 0px;">${lastSeenString}</p>`
+  }
 }

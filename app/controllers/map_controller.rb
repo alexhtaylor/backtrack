@@ -4,14 +4,22 @@ class MapController < ApplicationController
 
   def show
     # Loading location data from ip address as backup
-    ip_address = Net::HTTP.get(URI("https://api.ipify.org?format=json"))
-    ip_address = JSON.parse(ip_address)["ip"]
-    current_location = Geocoder.search(ip_address).first || Geocoder.search('New York, NY').first
-    @latitude_from_ip = current_location.latitude
-    @longitude_from_ip = current_location.longitude
+
+    begin
+      ip_address_response = Net::HTTP.get(URI("https://api.ipify.org?format=json"))
+      ip_address = JSON.parse(ip_address_response)["ip"]
+      current_location = Geocoder.search(ip_address).first || Geocoder.search('New York, NY').first
+      @latitude_from_ip = current_location.latitude
+      @longitude_from_ip = current_location.longitude
+    rescue StandardError => e
+      Rails.logger.error("Error while fetching IP address: #{e.message}")
+      redirect_to root_path
+    end
+
     @friend_ids_array = User.joins("INNER JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id")
     .where('friendships.user_id = ? OR friendships.friend_id = ?', current_user.id, current_user.id)
     .where.not(id: current_user.id).distinct.pluck(:id)
+
     @friend_locations = Location.where(user_id: @friend_ids_array, current_location: true)
     @friends = User.where(id: @friend_ids_array.to_a)
     @friends_by_id = {}

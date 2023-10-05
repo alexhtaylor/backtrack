@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'request_friend', to: 'map#request_friend', as: 'request_friend'
   post 'accept_friend', to: 'map#accept_friend', as: 'accept_friend'
   post 'reject_friend', to: 'map#reject_friend', as: 'reject_friend'
+  get '*path', to: 'errors#not_found', via: :all
+  # match '*unmatched', to: 'errors#not_found', via: :all
 
   resources :users, only: [:create]
   resources :sessions, only: [:create, :destroy]

@@ -9,8 +9,20 @@ class AvatarGenerator
 
   def self.generate(username)
     # Make an HTTP request to download the webpage.
-    response = HTTParty.get("https://www.instagram.com/#{username}")
-    document = Nokogiri::HTML(response.body)
+    begin
+      response = HTTParty.get("https://www.instagram.com/#{username}")
+
+      # Check the response status code
+      if response.success?
+        # Process the successful response here
+        document = Nokogiri::HTML(response.body)
+      else
+        return false
+      end
+    rescue StandardError => e
+      # Handle other types of errors here if needed
+      return false
+    end
 
     script_text = document.search('script').map(&:text).find { |text| text.include?('props') }
 

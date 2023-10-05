@@ -1,5 +1,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<%= javascript_include_tag 'signup' %>
 
 <div class="signup-logo-container">
   <img src="/assets/backtracklogosmall.png" alt="Logo">
@@ -52,6 +53,11 @@
       <%= text_field_tag :first_name, nil, placeholder: "First Name" %>
       <%= text_field_tag :last_name, nil, placeholder: "Last Name" %>
       <%= text_field_tag :username, nil, placeholder: "Instagram @", autocomplete: "off" %>
+      <label style="color: white;">
+        <%= check_box_tag :instagram_account, "1" %>
+        I don't have Instagram
+      </label>
+      <%= text_field_tag :whatsapp_number, nil, placeholder: "WhatsApp # (optional)", required: false %>
       <%= email_field_tag :email, nil, placeholder: "Email Address" %>
       <%= password_field_tag :password, nil, placeholder: "Password" %>
       <%= password_field_tag :password_confirmation, nil, placeholder: "Confirm Password" %>
