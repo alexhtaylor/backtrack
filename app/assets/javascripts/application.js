@@ -1,5 +1,5 @@
 //= require jquery
-//= require mapbox-gl/dist/mapbox-gl.js
+// = require mapbox-gl
 
 //= require popper
 //= require rails-ujs

@@ -2,7 +2,7 @@
   "name": "backtrackapp2",
   "private": true,
   "dependencies": {
-    "@google-cloud/storage": "^7.1.0",
+    "@google-cloud/storage": "^7.3.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",

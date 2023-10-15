@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   end
 
   def get_avatar(username)
+    puts "ABOUT TO LAUNCH AVATAR GENERATOR"
     if AvatarGenerator.generate(username)
       AvatarGenerator.generate(username)
     else

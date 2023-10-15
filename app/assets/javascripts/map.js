@@ -2,6 +2,7 @@
 var dropdownButton = document.getElementById('friends-dropdown-button')
 var dropdownContent = document.querySelector('.friends-dropdown-content')
 
+
 dropdownButton.addEventListener('click', () => {
   dropdownContent.classList.toggle('active')
 })
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const popups = [];
-
+  console.log('running map.js')
   map.on('load', () => {
     // window.onload = function() {
 

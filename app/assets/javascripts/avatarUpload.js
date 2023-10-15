@@ -3,10 +3,10 @@ const { Storage } = require('@google-cloud/storage');
 
 // Initialize Google Cloud Storage client
 const storage = new Storage({
-  keyFilename: '/Users/Alex/code/backtrackapp/backtrack/app/assets/config/backtrack-378407-e34764437632.json', // Replace with your key file
+  keyFilename: '/Users/alextaylor/Code/backtrack/app/assets/config/backtrack-378407-e34764437632.json',
 });
 
-const bucketName = 'backtrack-profile-images'; // Replace with your bucket name
+const bucketName = 'backtrack-profile-images';
 
 // Function to download an image temporarily
 async function downloadImage(url) {
